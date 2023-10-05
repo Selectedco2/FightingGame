@@ -68,7 +68,7 @@ else
     {
         Console.WriteLine("You start trying to reason with him but he keeps trying to turn you into one of his kind");
         Console.WriteLine("The battle eventually begins");
-        Console.WriteLine( );
+        Console.ReadKey();
     }
                 
     // FIGHT
@@ -76,39 +76,40 @@ else
     while (YourHealth > 0 && EnemyHealth > 0)
     {
         int YourDamage = generator.Next(20);
-        int EnemyDamage = generator.Next(20);
+        float EnemyDamage = generator.Next(20);
         int ShieldBash = generator.Next(10);
 
         Console.WriteLine( );
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
         Console.WriteLine($"{You}: {YourHealth} -------------------- {Enemy}: {EnemyHealth}");
-        Console.WriteLine("How will you respond? [Fight / Block / Shieldbash]");
+        Console.WriteLine("How will you respond? [Slash / Block / ShieldRam]");
         string fight = Console.ReadLine().ToLower();
         
-        while(fight != "fight" && fight !="block" && fight !="shieldbash")
+        while(fight != "slash" && fight !="block" && fight !="shieldram")
         {
             Console.WriteLine("That's not an option.");
             fight = Console.ReadLine().ToLower();
         }
 
-        if (fight == "fight")
+        if (fight == "slash")
         {
             EnemyHealth -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
-            YourHealth -= EnemyDamage;
+            YourHealth -= (int)(EnemyDamage);
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
         }
 
-        else if (fight == "Block")
+        else if (fight == "block")
         {
             Console.WriteLine("You raise your shield and block his sword. You take no damage");
         }
         
-        else if (fight == "Block")
+        else if (fight == "shieldram")
         {
             EnemyHealth -= ShieldBash;
-            YourHealth -= EnemyDamage - 3;
+            YourHealth -= (int)(EnemyDamage * 0.5f);
+            Console.WriteLine($"{You} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
         }
 
         Console.ReadKey();
