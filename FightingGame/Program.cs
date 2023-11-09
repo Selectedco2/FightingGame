@@ -31,14 +31,23 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 
-int YourHealth = 100;
+int Character1Health = 100;
+int Character2Health = 200;
+int Character3Health = 50;
 int EnemyHealth = 100;
 
-string You = "Karl Den Kristne";
+string Character1 = "Karl Den Kristne";
+string Character2 = "Rustade Ragnar";
+string Character3 = "Smygande Smilla";
+
 string Enemy = "Average Non Believer";
 
 Random generator = new Random();
 int HolyBladeDamage = generator.Next(20);
+
+string chartacterSelection = Console.ReadLine();
+if (chartacterSelection == Character1)
+{
 
 Console.WriteLine("A new challenger dares approach you, how will you respond?");
 Console.WriteLine("A) Swing at him ferociously. B) Try to reason with him. C) Invoke the lord.");
@@ -72,8 +81,7 @@ else
     }
                 
     // FIGHT
-
-    while (YourHealth > 0 && EnemyHealth > 0)
+    while (Character1Health > 0 && EnemyHealth > 0)
     {
         int YourDamage = generator.Next(20);
         float EnemyDamage = generator.Next(20);
@@ -82,7 +90,7 @@ else
         Console.WriteLine( );
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
-        Console.WriteLine($"{You}: {YourHealth} -------------------- {Enemy}: {EnemyHealth}");
+        Console.WriteLine($"{Character1}: {Character1Health} -------------------- {Enemy}: {EnemyHealth}");
         Console.WriteLine("How will you respond? [Slash / Block / ShieldRam]");
         string fight = Console.ReadLine().ToLower();
         
@@ -96,7 +104,7 @@ else
         {
             EnemyHealth -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
-            YourHealth -= (int)(EnemyDamage);
+            Character1Health -= (int)(EnemyDamage);
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
         }
 
@@ -108,9 +116,14 @@ else
         else if (fight == "shieldram")
         {
             EnemyHealth -= ShieldBash;
-            YourHealth -= (int)(EnemyDamage * 0.5f);
-            Console.WriteLine($"{You} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
+            Character1Health -= (int)(EnemyDamage * 0.5f);
+            Console.WriteLine($"{Character1} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
         }
+    }
+    if (Character1Health < 0 && Character2Health < 0 && Character3Health < 0)
+    {
+        Console.WriteLine("");
+    }
 
         Console.ReadKey();
     }
