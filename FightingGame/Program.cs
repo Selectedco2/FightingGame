@@ -1,23 +1,5 @@
-﻿// SLUMP:
-
-// Random generator = new Random();
-
-// int slumptal = generator.Next(10, 20);
-
-// Console.WriteLine(slumptal);
-
-
-// WHILE LOOP
-
-// int tal = 100;
-
-// while (tal > 0)
-// {
-//     Console.WriteLine(tal);
-//     tal++; eller tal--;
-// }
-
-// Console.WriteLine("Färdig!");
+﻿
+// OBS!!! FORTSÄTTER PÅ DENNA SOM MITT VINTER-PROJEKT!
 
 
 // METOD:
@@ -28,26 +10,21 @@
 // }
 // SayHello();
 
-using System.Diagnostics;
-using System.Linq.Expressions;
 
-int Character1Health = 100;
-int Character2Health = 200;
-int Character3Health = 50;
 int EnemyHealth = 100;
-
-string Character1 = "Karl Den Kristne";
-string Character2 = "Rustade Ragnar";
-string Character3 = "Smygande Smilla";
+int[] HP = {100, 200, 50};
+int[] DodgeChances = {20, 10, 40};
+string[] Characters = {"Karl Den Kristne", "Rustade Ragnar", "Smygande Smilla"};
 
 string Enemy = "Average Non Believer";
 
-Random generator = new Random();
-int HolyBladeDamage = generator.Next(20);
+Random Dice = new Random();
+int HolyBladeDamage = Dice.Next(20);
 
-string chartacterSelection = Console.ReadLine();
-if (chartacterSelection == Character1)
-{
+Console.WriteLine("Choose your class! 1). Karl Den Kristne | 2). Rustade Ragnar | 3). Smygande smilla");
+int cSelect = Convert.ToInt32(Console.ReadLine());
+
+// "Lore"
 
 Console.WriteLine("A new challenger dares approach you, how will you respond?");
 Console.WriteLine("A) Swing at him ferociously. B) Try to reason with him. C) Invoke the lord.");
@@ -81,16 +58,17 @@ else
     }
                 
     // FIGHT
-    while (Character1Health > 0 && EnemyHealth > 0)
+
+    while (HP[cSelect-1] > 0 && EnemyHealth > 0)
     {
-        int YourDamage = generator.Next(20);
-        float EnemyDamage = generator.Next(20);
-        int ShieldBash = generator.Next(10);
+        int YourDamage = Dice.Next(20);
+        float EnemyDamage = Dice.Next(20);
+        int ShieldBash = Dice.Next(10);
 
         Console.WriteLine( );
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
-        Console.WriteLine($"{Character1}: {Character1Health} -------------------- {Enemy}: {EnemyHealth}");
+        Console.WriteLine($"{Characters[cSelect-1]}: {HP[cSelect-1]} -------------------- {Enemy}: {EnemyHealth}");
         Console.WriteLine("How will you respond? [Slash / Block / ShieldRam]");
         string fight = Console.ReadLine().ToLower();
         
@@ -104,7 +82,7 @@ else
         {
             EnemyHealth -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
-            Character1Health -= (int)(EnemyDamage);
+            HP[cSelect-1] -= (int)(EnemyDamage);
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
         }
 
@@ -116,19 +94,19 @@ else
         else if (fight == "shieldram")
         {
             EnemyHealth -= ShieldBash;
-            Character1Health -= (int)(EnemyDamage * 0.5f);
-            Console.WriteLine($"{Character1} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
+            HP[cSelect-1] -= (int)(EnemyDamage * 0.5f);
+            Console.WriteLine($"{Characters[cSelect-1]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
         }
     }
-    if (Character1Health < 0 && Character2Health < 0 && Character3Health < 0)
+    if (HP[cSelect-1] <= 0)
     {
-        Console.WriteLine("");
+        Console.WriteLine("You fall to your knees and surrender your blade. He swiftly cuts off your neck.");
     }
 
         Console.ReadKey();
     }
 
-}
+
 
 
 
