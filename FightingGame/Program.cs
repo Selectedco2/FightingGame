@@ -1,7 +1,6 @@
 ﻿
 // OBS!!! FORTSÄTTER PÅ DENNA SOM MITT VINTER-PROJEKT!
 
-
 // METOD:
 
 // static void SayHello()
@@ -10,19 +9,22 @@
 // }
 // SayHello();
 
+// Variabler och Arrays osv
 
 int EnemyHealth = 100;
 int[] HP = {100, 200, 50};
 int[] DodgeChances = {20, 10, 40};
 string[] Characters = {"Karl Den Kristne", "Rustade Ragnar", "Smygande Smilla"};
-
 string Enemy = "Average Non Believer";
 
 Random Dice = new Random();
 int HolyBladeDamage = Dice.Next(20);
 
+int cChoice = 0;
+
 Console.WriteLine("Choose your class! 1). Karl Den Kristne | 2). Rustade Ragnar | 3). Smygande smilla");
-int cSelect = Convert.ToInt32(Console.ReadLine());
+string val = Console.ReadLine();
+bool cSelect = int.TryParse(val, out cChoice-1);
 
 // "Lore"
 
@@ -59,7 +61,7 @@ else
                 
     // FIGHT
 
-    while (HP[cSelect-1] > 0 && EnemyHealth > 0)
+    while (HP[cChoice] > 0 && EnemyHealth > 0)
     {
         int YourDamage = Dice.Next(20);
         float EnemyDamage = Dice.Next(20);
@@ -68,11 +70,11 @@ else
         Console.WriteLine( );
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
-        Console.WriteLine($"{Characters[cSelect-1]}: {HP[cSelect-1]} -------------------- {Enemy}: {EnemyHealth}");
-        Console.WriteLine("How will you respond? [Slash / Block / ShieldRam]");
+        Console.WriteLine($"{Characters[cChoice]}: {HP[cChoice]} -------------------- {Enemy}: {EnemyHealth}");
+        Console.WriteLine("How will you respond? [Slash / Block / Ram]");
         string fight = Console.ReadLine().ToLower();
         
-        while(fight != "slash" && fight !="block" && fight !="shieldram")
+        while(fight != "slash" && fight !="block" && fight !="ram")
         {
             Console.WriteLine("That's not an option.");
             fight = Console.ReadLine().ToLower();
@@ -82,7 +84,7 @@ else
         {
             EnemyHealth -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
-            HP[cSelect-1] -= (int)(EnemyDamage);
+            HP[cChoice] -= (int)(EnemyDamage);
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
         }
 
@@ -94,11 +96,14 @@ else
         else if (fight == "shieldram")
         {
             EnemyHealth -= ShieldBash;
-            HP[cSelect-1] -= (int)(EnemyDamage * 0.5f);
-            Console.WriteLine($"{Characters[cSelect-1]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
+            HP[cChoice] -= (int)(EnemyDamage * 0.5f);
+            Console.WriteLine($"{Characters[cChoice]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
         }
+
+    // Endscreen / Loss / Victory
+
     }
-    if (HP[cSelect-1] <= 0)
+    if (HP[cChoice] <= 0)
     {
         Console.WriteLine("You fall to your knees and surrender your blade. He swiftly cuts off your neck.");
     }
