@@ -11,20 +11,28 @@
 
 // Variabler och Arrays osv
 
-int EnemyHealth = 100;
+int[] EnemyHP = {100, 150, 200};
 int[] HP = {100, 200, 50};
-int[] DodgeChances = {20, 10, 40};
+int[] DodgeChances = {20, 10, 50};
 string[] Characters = {"Karl Den Kristne", "Rustade Ragnar", "Smygande Smilla"};
-string Enemy = "Average Non Believer";
+string[] Enemies = {"Grunt", "Cyclops", "The Devil"};
 
 Random Dice = new Random();
 int HolyBladeDamage = Dice.Next(20);
-
 int cChoice = 0;
+int currentEnemy = 0;
 
-Console.WriteLine("Choose your class! 1). Karl Den Kristne | 2). Rustade Ragnar | 3). Smygande smilla");
+// metod
+// -------------------------------------------
+static void Skriv_Något_Här()
+{
+    Console.WriteLine("Något spännande");
+}
+// -------------------------------------------
+
+Console.WriteLine("Choose your class! 1). Karl Den Kristne | 2). Rustade Ragnar | 3). Smygande Smilla");
 string val = Console.ReadLine();
-bool cSelect = int.TryParse(val, out cChoice-1);
+bool cSelect = int.TryParse(val, out cChoice);
 
 // "Lore"
 
@@ -45,23 +53,23 @@ else
 {
     if (action == "A")
     {
-        EnemyHealth -= HolyBladeDamage;
+        EnemyHP[currentEnemy] -= HolyBladeDamage;
         Console.WriteLine("You charge at the pleb with your holy blade");
         Console.WriteLine($"You manage to deal {HolyBladeDamage} damage to him.");
-        Console.WriteLine($"He now has {EnemyHealth} health remaining");
+        Console.WriteLine($"He now has {EnemyHP[currentEnemy]} health remaining");
         Console.WriteLine( );
     }
 
     if (action == "B")
     {
-        Console.WriteLine("You start trying to reason with him but he keeps trying to turn you into one of his kind");
+        Console.WriteLine("You start trying to reason with him but he keeps trying to turn you away from your saviour");
         Console.WriteLine("The battle eventually begins");
         Console.ReadKey();
     }
                 
     // FIGHT
 
-    while (HP[cChoice] > 0 && EnemyHealth > 0)
+    while (HP[cChoice-1] > 0 && EnemyHP[currentEnemy] > 0)
     {
         int YourDamage = Dice.Next(20);
         float EnemyDamage = Dice.Next(20);
@@ -70,7 +78,7 @@ else
         Console.WriteLine( );
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
-        Console.WriteLine($"{Characters[cChoice]}: {HP[cChoice]} -------------------- {Enemy}: {EnemyHealth}");
+        Console.WriteLine($"{Characters[cChoice-1]}: {HP[cChoice-1]} -------------------- {currentEnemy}: {EnemyHP[currentEnemy]}");
         Console.WriteLine("How will you respond? [Slash / Block / Ram]");
         string fight = Console.ReadLine().ToLower();
         
@@ -82,9 +90,9 @@ else
 
         if (fight == "slash")
         {
-            EnemyHealth -= YourDamage;
+            EnemyHP[currentEnemy] -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
-            HP[cChoice] -= (int)(EnemyDamage);
+            HP[cChoice-1] -= (int)(EnemyDamage);
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
         }
 
@@ -95,24 +103,23 @@ else
         
         else if (fight == "shieldram")
         {
-            EnemyHealth -= ShieldBash;
-            HP[cChoice] -= (int)(EnemyDamage * 0.5f);
-            Console.WriteLine($"{Characters[cChoice]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
+            EnemyHP[currentEnemy] -= ShieldBash;
+            HP[cChoice-1] -= (int)(EnemyDamage * 0.5f);
+            Console.WriteLine($"{Characters[cChoice-1]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
         }
 
     // Endscreen / Loss / Victory
 
     }
-    if (HP[cChoice] <= 0)
+    if (HP[cChoice-1] <= 0)
     {
         Console.WriteLine("You fall to your knees and surrender your blade. He swiftly cuts off your neck.");
     }
 
-        Console.ReadKey();
+    if (EnemyHP[currentEnemy] <= 0)
+    {
+        currentEnemy++;
     }
-
-
-
-
-
-Console.ReadLine();
+    
+        Console.ReadKey();
+}
