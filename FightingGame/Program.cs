@@ -12,17 +12,24 @@
 // Variabler och Arrays osv
 
 using System.Collections;
+using System.IO.Pipes;
 
 int[] EnemyHP = {100, 150, 200};
 int[] HP = {100, 200, 50};
 int[] DodgeChances = {20, 10, 50};
 string[] Characters = {"Karl Den Kristne", "Rustade Ragnar", "Smygande Smilla"};
 string[] Enemies = {"Grunt", "Cyclops", "The Devil"};
+string [] Loot1 = {"A Small gold pile", "An axe", "An iron Helmet"};
+string [] Loot2 = {"A giant tooth", "A Zweihänder", "A chestplate"};
+string [] Loot3 = {"A golden crown", "A hellish pitchfork", "A horn of summoning"};
 bool replay = true;
 Random Dice = new Random();
 int HolyBladeDamage = Dice.Next(20);
 int cChoice = 0;
 int currentEnemy = 0;
+Characters[Loot]
+int Loot = Dice.Next(Characters.Length);
+
 
 // metod
 // -------------------------------------------
@@ -134,7 +141,12 @@ else
     if (EnemyHP[currentEnemy] <= 0)
     {
         currentEnemy++;
-        Console.WriteLine("Would you like to pillage the enemies body?");
+        Console.WriteLine("Would you like to pillage the enemies body? [Yes / No]");
+        string pillage = Console.ReadLine().ToLower();
+        if (pillage == "yes")
+        {
+            
+        }
         Console.WriteLine("Ready to face your next opponent?");
         Console.ReadLine();
     }
