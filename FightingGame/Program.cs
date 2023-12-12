@@ -14,6 +14,32 @@
 using System.Collections;
 using System.IO.Pipes;
 
+Enemy Grunt = new Enemy();
+Grunt.name = "Grunt";
+Grunt.hp = 100;
+Grunt.loot = new string[] {"A Small gold pile", "An axe", "An iron Helmet"};
+
+Enemy Cyclops = new Enemy();
+Cyclops.name = "Cyclops";
+Cyclops.hp = 150;
+Grunt.loot = new string[] {"A giant tooth", "A Zweihänder", "A chestplate"};
+
+Enemy Devil = new Enemy();
+Devil.name = "The Devil";
+Devil.hp = 200;
+Devil.loot = new string[] {"A golden crown", "A hellish pitchfork", "A horn of summoning"};
+
+List<Enemy> enemies = new();
+enemies.Add(Grunt);
+enemies.Add(Cyclops);
+enemies.Add(Devil);
+
+
+enemies[0].loot
+
+Enemy currentEnemy = Grunt;
+
+
 int[] EnemyHP = {100, 150, 200};
 int[] HP = {100, 200, 50};
 int[] DodgeChances = {20, 10, 50};
@@ -27,13 +53,13 @@ Random Dice = new Random();
 int HolyBladeDamage = Dice.Next(20);
 int cChoice = 0;
 int currentEnemy = 0;
-Characters[Loot]
-int Loot = Dice.Next(Characters.Length);
+
+int NoobLoot = Dice.Next(Loot1.Length);
 
 
 // metod
 // -------------------------------------------
-static void Skriv_Något_Här()
+static void Namn_På_Metod()
 {
     Console.WriteLine("Något spännande");
 }
@@ -140,15 +166,27 @@ else
         
     if (EnemyHP[currentEnemy] <= 0)
     {
-        currentEnemy++;
         Console.WriteLine("Would you like to pillage the enemies body? [Yes / No]");
         string pillage = Console.ReadLine().ToLower();
-        if (pillage == "yes")
-        {
-            
-        }
+
+            if (pillage == "yes")
+
+            {
+                Console.WriteLine($"You managed to dig up "[currentEnemy[]);
+            }
+
+            currentEnemy++;
         Console.WriteLine("Ready to face your next opponent?");
         Console.ReadLine();
     }
     
+}
+
+
+
+
+class Enemy {
+    public string name;
+    public int hp;
+    public List[] loot;  
 }
