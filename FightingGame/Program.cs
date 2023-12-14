@@ -14,47 +14,41 @@
 using System.Collections;
 using System.IO.Pipes;
 
-Enemy Grunt = new Enemy();
-Grunt.name = "Grunt";
-Grunt.hp = 100;
-Grunt.loot = new string[] {"A Small gold pile", "An axe", "An iron Helmet"};
+// String för alla enemies
 
-Enemy Cyclops = new Enemy();
-Cyclops.name = "Cyclops";
-Cyclops.hp = 150;
-Grunt.loot = new string[] {"A giant tooth", "A Zweihänder", "A chestplate"};
+Enemy grunt = new Enemy();
+grunt.name = "Grunt";
+grunt.hp = 100;
+grunt.loot = new string[] {"A Small gold pile", "An axe", "An iron Helmet"};
 
-Enemy Devil = new Enemy();
+Enemy cyclops = new Enemy();
+cyclops.name = "Cyclops";
+cyclops.hp = 150;
+cyclops.loot = new string[] {"A giant tooth", "A Zweihänder", "A chestplate"};
+
+Enemy Devil = new Enemy();  
 Devil.name = "The Devil";
 Devil.hp = 200;
 Devil.loot = new string[] {"A golden crown", "A hellish pitchfork", "A horn of summoning"};
 
 List<Enemy> enemies = new();
-enemies.Add(Grunt);
-enemies.Add(Cyclops);
+enemies.Add(grunt);
+enemies.Add(cyclops);
 enemies.Add(Devil);
 
+// enemies[0].loot / ememies[1].loot för att ge looten beroende på nollbaserad lista
 
-enemies[0].loot
-
-Enemy currentEnemy = Grunt;
-
-
+Enemy currentEnemy = grunt;
 int[] EnemyHP = {100, 150, 200};
 int[] HP = {100, 200, 50};
 int[] DodgeChances = {20, 10, 50};
 string[] Characters = {"Karl Den Kristne", "Rustade Ragnar", "Smygande Smilla"};
-string[] Enemies = {"Grunt", "Cyclops", "The Devil"};
-string [] Loot1 = {"A Small gold pile", "An axe", "An iron Helmet"};
-string [] Loot2 = {"A giant tooth", "A Zweihänder", "A chestplate"};
-string [] Loot3 = {"A golden crown", "A hellish pitchfork", "A horn of summoning"};
 bool replay = true;
 Random Dice = new Random();
 int HolyBladeDamage = Dice.Next(20);
 int cChoice = 0;
-int currentEnemy = 0;
 
-int NoobLoot = Dice.Next(Loot1.Length);
+int currentEnemyNum = 0;
 
 
 // metod
@@ -90,10 +84,10 @@ else
 {
     if (action == "A")
     {
-        EnemyHP[currentEnemy] -= HolyBladeDamage;
+        currentEnemy.hp -= HolyBladeDamage;
         Console.WriteLine("You charge at the pleb with your holy blade");
         Console.WriteLine($"You manage to deal {HolyBladeDamage} damage to him.");
-        Console.WriteLine($"He now has {EnemyHP[currentEnemy]} health remaining");
+        Console.WriteLine($"He now has {currentEnemy.hp} health remaining");
         Console.WriteLine( );
     }
 
@@ -107,7 +101,7 @@ else
     // FIGHT
     
     
-        while (HP[cChoice-1] > 0 && EnemyHP[currentEnemy] > 0)
+        while (HP[cChoice-1] > 0 && currentEnemy.hp > 0)
     {
         int YourDamage = Dice.Next(20);
         float EnemyDamage = Dice.Next(20);
@@ -116,7 +110,7 @@ else
         Console.WriteLine( );
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
-        Console.WriteLine($"{Characters[cChoice-1]}: {HP[cChoice-1]} -------------------- {Enemies[currentEnemy]}: {EnemyHP[currentEnemy]}");
+        Console.WriteLine($"{Characters[cChoice-1]}: {HP[cChoice-1]} -------------------- {currentEnemy.name}: {currentEnemy.hp}");
         Console.WriteLine("How will you respond? [Slash / Block / Ram]");
         string fight = Console.ReadLine().ToLower();
         
@@ -128,7 +122,7 @@ else
 
         if (fight == "slash")
         {
-            EnemyHP[currentEnemy] -= YourDamage;
+            currentEnemy.hp -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
             HP[cChoice-1] -= (int)(EnemyDamage);
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
@@ -141,7 +135,7 @@ else
         
         else if (fight == "ram")
         {
-            EnemyHP[currentEnemy] -= ShieldBash;
+            currentEnemy.hp -= ShieldBash;
             HP[cChoice-1] -= (int)(EnemyDamage * 0.5f);
             Console.WriteLine($"{Characters[cChoice-1]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
         }
@@ -164,7 +158,7 @@ else
 
     }
         
-    if (EnemyHP[currentEnemy] <= 0)
+    if (currentEnemy.hp <= 0)
     {
         Console.WriteLine("Would you like to pillage the enemies body? [Yes / No]");
         string pillage = Console.ReadLine().ToLower();
@@ -172,11 +166,47 @@ else
             if (pillage == "yes")
 
             {
-                Console.WriteLine($"You managed to dig up "[currentEnemy[]);
+                int NoobLoot = Dice.Next(grunt.loot.Length);
+                Console.WriteLine($"You managed to dig up {currentEnemy.loot}");
             }
 
-            currentEnemy++;
+            else if (pillage == "no")
+
+            {
+                Console.WriteLine("You devicde to leave the poor soul to rest");
+            }
+            
+            else if (pillage != "no" || pillage != "yes")
+            {
+                Console.WriteLine("That's not an option");
+                Console.ReadLine().ToLower();
+            }
+            
+
         Console.WriteLine("Ready to face your next opponent?");
+        string next = Console.ReadLine().ToLower();
+        
+        if (next == "yes")
+        {
+
+        }
+
+        else if (next == "no")
+        {
+            
+        }
+        
+        else if (next != "yes" || next != "no")
+        {
+            Console.WriteLine("That's not an option.");
+            Console.ReadLine().ToLower();
+        }
+
+        currentEnemyNum++;
+        currentEnemy = enemies[currentEnemyNum];
+
+
+
         Console.ReadLine();
     }
     
@@ -188,5 +218,5 @@ else
 class Enemy {
     public string name;
     public int hp;
-    public List[] loot;  
+    public string[] loot;  
 }
