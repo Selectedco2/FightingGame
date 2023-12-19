@@ -58,6 +58,7 @@ static void Namn_På_Metod()
     Console.WriteLine("Något spännande");
 }
 // -------------------------------------------
+
 while (replay == true)
 {
 Console.Clear();
@@ -111,7 +112,7 @@ else
         Console.WriteLine("----- _ * + A NEW ROUND COMMENCES + * _ -----");
         Console.WriteLine( );
         Console.WriteLine($"{Characters[cChoice-1]}: {HP[cChoice-1]} -------------------- {currentEnemy.name}: {currentEnemy.hp}");
-        Console.WriteLine("How will you respond? [Slash / Block / Ram]");
+        Console.WriteLine("How will you respond? [Slash / Block / Ram / Inventory]");
         string fight = Console.ReadLine().ToLower();
         
         while(fight != "slash" && fight !="block" && fight !="ram")
@@ -160,49 +161,56 @@ else
         
     if (currentEnemy.hp <= 0)
     {
+        Console.WriteLine("");
         Console.WriteLine("Would you like to pillage the enemies body? [Yes / No]");
         string pillage = Console.ReadLine().ToLower();
+
+            while (pillage != "no" && pillage != "yes")
+            {
+                Console.WriteLine("That's not an option");
+                pillage = Console.ReadLine().ToLower();
+            }
 
             if (pillage == "yes")
 
             {
+                int Loot = Dice.Next(3);
                 int NoobLoot = Dice.Next(grunt.loot.Length);
-                Console.WriteLine($"You managed to dig up {currentEnemy.loot}");
+                Console.WriteLine($"You managed to dig up {currentEnemy.loot[Loot]}");
             }
 
             else if (pillage == "no")
 
             {
-                Console.WriteLine("You devicde to leave the poor soul to rest");
+                Console.WriteLine("You decide to leave the poor soul to rest");
             }
             
-            else if (pillage != "no" || pillage != "yes")
-            {
-                Console.WriteLine("That's not an option");
-                Console.ReadLine().ToLower();
-            }
+            
             
 
         Console.WriteLine("Ready to face your next opponent?");
         string next = Console.ReadLine().ToLower();
         
+        while (next != "yes" && next != "no")
+        {
+            Console.WriteLine("That's not an option.");
+            next = Console.ReadLine().ToLower();
+        }
+
         if (next == "yes")
         {
-
+            currentEnemyNum++;
+            Console.WriteLine($"Would you like to take a look at your inventory before facing {currentEnemy}");
         }
 
         else if (next == "no")
         {
-            
+            replay = false;
+            Console.WriteLine("Okay, thank you for playing. Press any key to exit");
+            Console.ReadKey();
         }
         
-        else if (next != "yes" || next != "no")
-        {
-            Console.WriteLine("That's not an option.");
-            Console.ReadLine().ToLower();
-        }
-
-        currentEnemyNum++;
+        
         currentEnemy = enemies[currentEnemyNum];
 
 
