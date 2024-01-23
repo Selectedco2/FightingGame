@@ -15,6 +15,10 @@ using System.Collections;
 using System.IO.Pipes;
 
 // String för alla enemies
+Item BackPack = new Item();
+BackPack.itemName = "An axe";
+BackPack.itemDamage = 10;
+
 
 Enemy grunt = new Enemy();
 grunt.name = "Grunt";
@@ -51,19 +55,28 @@ int cChoice = 0;
 int currentEnemyNum = 0;
 
 
-// metod
-// -------------------------------------------
-static void Namn_På_Metod()
+// metod för vad commandot inventory ska visa
+
+static void Inventory()
+
 {
-    Console.WriteLine("Något spännande");
+    Console.WriteLine("----------------------------------");
+    Console.WriteLine();
 }
-// -------------------------------------------
+
 
 while (replay == true)
 {
 Console.Clear();
 Console.WriteLine("Choose your class! 1). Karl Den Kristne | 2). Rustade Ragnar | 3). Smygande Smilla");
-string val = Console.ReadLine();
+string val = Console.ReadLine().ToLower();
+
+while (val != "1" && val !="2" && val !="3")
+{
+    Console.WriteLine("That's not an option.");
+    val = Console.ReadLine().ToLower();
+}
+
 bool cSelect = int.TryParse(val, out cChoice);
 
 // "Lore"
@@ -99,7 +112,7 @@ else
         Console.ReadKey();
     }
                 
-    // FIGHT
+    // selection
     
     
         while (HP[cChoice-1] > 0 && currentEnemy.hp > 0)
@@ -113,15 +126,15 @@ else
         Console.WriteLine( );
         Console.WriteLine($"{Characters[cChoice-1]}: {HP[cChoice-1]} -------------------- {currentEnemy.name}: {currentEnemy.hp}");
         Console.WriteLine("How will you respond? [Slash / Block / Ram / Inventory]");
-        string fight = Console.ReadLine().ToLower();
+        string selection = Console.ReadLine().ToLower();
         
-        while(fight != "slash" && fight !="block" && fight !="ram")
+        while(selection != "slash" && selection !="block" && selection !="ram" && selection != "inventory")
         {
             Console.WriteLine("That's not an option.");
-            fight = Console.ReadLine().ToLower();
+            selection = Console.ReadLine().ToLower();
         }
 
-        if (fight == "slash")
+        if (selection == "slash")
         {
             currentEnemy.hp -= YourDamage;
             Console.WriteLine($"You managed to deal {YourDamage} damage to the pesky non-christian.");
@@ -129,16 +142,21 @@ else
             Console.WriteLine($"He quickly strikes you back dealing {EnemyDamage} damage to you");
         }
 
-        else if (fight == "block")
+        else if (selection == "block")
         {
             Console.WriteLine("You raise your shield and block his sword. You take no damage");
         }
         
-        else if (fight == "ram")
+        else if (selection == "ram")
         {
             currentEnemy.hp -= ShieldBash;
             HP[cChoice-1] -= (int)(EnemyDamage * 0.5f);
             Console.WriteLine($"{Characters[cChoice-1]} ram's the enemy with his shield, dealing {ShieldBash} damage while also taking a reduced {EnemyDamage} damage.");
+        }
+        
+        else if (selection == "inventory")
+        {
+            
         }
     }
     // Endscreen / Loss / Victory / replay
@@ -200,7 +218,19 @@ else
         if (next == "yes")
         {
             currentEnemyNum++;
-            Console.WriteLine($"Would you like to take a look at your inventory before facing {currentEnemy}");
+            Console.WriteLine($"Would you like to take a look at your inventory before facing {currentEnemy}? [Yes/No]");
+            string inv = Console.ReadLine().ToLower();
+            
+            if (inv == "yes")
+            {
+                
+            }
+
+            else if (inv == "no")
+            {
+                
+            }
+
         }
 
         else if (next == "no")
@@ -223,8 +253,17 @@ else
 
 
 
-class Enemy {
+class Enemy 
+{
     public string name;
     public int hp;
     public string[] loot;  
 }
+
+class Item
+{
+    public string itemName;
+    public int itemDamage;
+    public int itemHp;
+
+} 
